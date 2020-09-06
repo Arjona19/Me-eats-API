@@ -1,14 +1,11 @@
 const session = require('express-session');
+const flash = require('connect-flash');
+const passport = require('passport')
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
-var indexRouter = require('./routes/index');
-var authRouter = require('./routes/auth');
-const passport = require('passport');
-
 var app = express();
 
 // view engine setup
@@ -24,10 +21,16 @@ app.use(session({
   resave:true,
   saveUninitialized:true
 }));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use((req, res, next)=>{
+  req.body.message = req.flash('message');
+  next();
+});
+var indexRouter = require('./routes/index');
+var authRouter = require('./routes/auth');
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 

@@ -1,17 +1,21 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
 router.get('/home', function(req, res, next) {
-  res.send("Exito");
+  if (req.body.message) {
+    return res.send(req.body.message)
+  }
 });
 
 router.get('/err', function(req, res, next) {
-  res.send("No se pudo");
+  if (req.body.message) {
+     return res.send(req.body.message)
+  }
 });
 
 module.exports = router;
