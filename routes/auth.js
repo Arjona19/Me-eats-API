@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var PassportLocal = require('passport-local').Strategy;
-require('../database/conn');
+//require('../database/conn');
 const User = require('../models/user');
 
 passport.use('local-signup', new PassportLocal({
